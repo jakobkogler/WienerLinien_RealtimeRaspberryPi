@@ -3,7 +3,7 @@ import requests
 from requests.exceptions import HTTPError
 import json
 from dateutil import parser
-import datetime
+from datetime import datetime, timedelta
 import pytz
 
 
@@ -34,7 +34,7 @@ class WienerLinien:
         assert json_resp['message']['value'] == 'OK'
 
         server_time = parser.parse(json_resp['message']['serverTime'])
-        now = datetime.datetime.now(tz)
+        now = datetime.now(tz)
         assert(abs(now - server_time).seconds < 5)
         print(now)
         print(server_time)
@@ -48,10 +48,10 @@ class WienerLinien:
                 data[name] = departures
         return data
 
-    def get_departure_string(self, departure: Dict, now: datetime.datetime) -> str:
+    def get_departure_string(self, departure: Dict, now: datetime) -> str:
         if 'timeReal' in departure:
             departure_time = parser.parse(departure['timeReal'])
-            diff_total = (departure_time - now).seconds
+            diff_total = max(departure_time - now, timedelta(0)).seconds
             if diff_total > 10 * 60:
                 return f"{diff_total // 60}"
             return f"{diff_total // 60}:{diff_total % 60:02}"

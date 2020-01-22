@@ -126,9 +126,13 @@ async def _main(apikey: str, RBL_numbers: List[int]):
     )
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(description='Display real time information of Wiener Linien station on a Raspberry Pi')
     parser.add_argument('apikey', help='Key for the Wiener Linien API')
     parser.add_argument('RBL', type=int, nargs='+', help='RBL numbers for the stations')
     args = parser.parse_args()
     asyncio.run(_main(args.apikey, args.RBL))
+
+
+if __name__ == '__main__':
+    main()

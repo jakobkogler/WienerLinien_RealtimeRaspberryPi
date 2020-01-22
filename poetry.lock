@@ -1,0 +1,284 @@
+[[package]]
+category = "main"
+description = "CircuitPython APIs for non-CircuitPython versions of Python such as CPython on Linux and MicroPython."
+name = "adafruit-blinka"
+optional = false
+python-versions = ">=3.4.0"
+version = "3.7.0"
+
+[package.dependencies]
+Adafruit-PlatformDetect = "*"
+Adafruit-PureIO = "*"
+pyftdi = ">=0.40.0"
+spidev = ">=3.4"
+sysv_ipc = "*"
+
+[[package]]
+category = "main"
+description = "CircuitPython driver for 74HC595 shift register."
+name = "adafruit-circuitpython-74hc595"
+optional = false
+python-versions = "*"
+version = "1.0.3"
+
+[package.dependencies]
+Adafruit-Blinka = "*"
+adafruit-circuitpython-busdevice = "*"
+
+[[package]]
+category = "main"
+description = "CircuitPython bus device classes to manage bus sharing."
+name = "adafruit-circuitpython-busdevice"
+optional = false
+python-versions = "*"
+version = "4.1.1"
+
+[package.dependencies]
+Adafruit-Blinka = "*"
+
+[[package]]
+category = "main"
+description = "CircuitPython library for standard character LCDs."
+name = "adafruit-circuitpython-charlcd"
+optional = false
+python-versions = "*"
+version = "3.2.2"
+
+[package.dependencies]
+Adafruit-Blinka = "*"
+adafruit-circuitpython-74hc595 = "*"
+adafruit-circuitpython-busdevice = "*"
+adafruit-circuitpython-mcp230xx = "*"
+
+[[package]]
+category = "main"
+description = "CircuitPython library for controlling a MCP23008 or MCP23017 I2C GPIO expander."
+name = "adafruit-circuitpython-mcp230xx"
+optional = false
+python-versions = "*"
+version = "2.2.1"
+
+[package.dependencies]
+Adafruit-Blinka = "*"
+adafruit-circuitpython-busdevice = "*"
+
+[[package]]
+category = "main"
+description = "Platform detection for use by libraries like Adafruit-Blinka."
+name = "adafruit-platformdetect"
+optional = false
+python-versions = ">=3.4.0"
+version = "2.1.0"
+
+[[package]]
+category = "main"
+description = "Pure python (i.e. no native extensions) access to Linux IO including I2C and SPI.  Drop in replacement for smbus and spidev modules."
+name = "adafruit-pureio"
+optional = false
+python-versions = ">=3.4.0"
+version = "1.0.4"
+
+[[package]]
+category = "main"
+description = "Python package for providing Mozilla's CA Bundle."
+name = "certifi"
+optional = false
+python-versions = "*"
+version = "2019.11.28"
+
+[[package]]
+category = "main"
+description = "Universal encoding detector for Python 2 and 3"
+name = "chardet"
+optional = false
+python-versions = "*"
+version = "3.0.4"
+
+[[package]]
+category = "main"
+description = "Internationalized Domain Names in Applications (IDNA)"
+name = "idna"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "2.8"
+
+[[package]]
+category = "main"
+description = "FTDI device driver (pure Python)"
+name = "pyftdi"
+optional = false
+python-versions = ">=3.5"
+version = "0.42.2"
+
+[package.dependencies]
+pyserial = ">=3.0"
+pyusb = ">=1.0.0"
+
+[[package]]
+category = "main"
+description = "Python Serial Port Extension"
+name = "pyserial"
+optional = false
+python-versions = "*"
+version = "3.4"
+
+[[package]]
+category = "main"
+description = "Extensions to the standard Python datetime module"
+name = "python-dateutil"
+optional = false
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
+version = "2.8.1"
+
+[package.dependencies]
+six = ">=1.5"
+
+[[package]]
+category = "main"
+description = "World timezone definitions, modern and historical"
+name = "pytz"
+optional = false
+python-versions = "*"
+version = "2019.3"
+
+[[package]]
+category = "main"
+description = "Python USB access module"
+name = "pyusb"
+optional = false
+python-versions = "*"
+version = "1.0.2"
+
+[[package]]
+category = "main"
+description = "Python HTTP for Humans."
+name = "requests"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+version = "2.22.0"
+
+[package.dependencies]
+certifi = ">=2017.4.17"
+chardet = ">=3.0.2,<3.1.0"
+idna = ">=2.5,<2.9"
+urllib3 = ">=1.21.1,<1.25.0 || >1.25.0,<1.25.1 || >1.25.1,<1.26"
+
+[package.extras]
+security = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)"]
+socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7)", "win-inet-pton"]
+
+[[package]]
+category = "main"
+description = "Python 2 and 3 compatibility utilities"
+name = "six"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
+version = "1.14.0"
+
+[[package]]
+category = "main"
+description = "Python bindings for Linux SPI access through spidev"
+marker = "sys_platform == \"linux\" and platform_machine != \"mips\""
+name = "spidev"
+optional = false
+python-versions = "*"
+version = "3.4"
+
+[[package]]
+category = "main"
+description = "System V IPC primitives (semaphores, shared memory and message queues) for Python"
+marker = "platform_system != \"Windows\" and platform_machine != \"mips\""
+name = "sysv-ipc"
+optional = false
+python-versions = "*"
+version = "1.0.1"
+
+[[package]]
+category = "main"
+description = "HTTP library with thread-safe connection pooling, file post, and more."
+name = "urllib3"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4"
+version = "1.25.8"
+
+[package.extras]
+brotli = ["brotlipy (>=0.6.0)"]
+secure = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "certifi", "ipaddress"]
+socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7,<2.0)"]
+
+[metadata]
+content-hash = "e71fb7e7a4201c4d2482d8c71234a62adf697f70b891077f9c96f998e44121c3"
+python-versions = "^3.7.4"
+
+[metadata.files]
+adafruit-blinka = [
+    {file = "Adafruit-Blinka-3.7.0.tar.gz", hash = "sha256:9267acecbfc7663e87d176bf71635268510f11afe919f38cc03f77acc7638a78"},
+]
+adafruit-circuitpython-74hc595 = [
+    {file = "adafruit-circuitpython-74hc595-1.0.3.tar.gz", hash = "sha256:cb3137a3d21316e56663865fdfa34bdba383ff0199a9e6d9a8d3a034f32a782f"},
+]
+adafruit-circuitpython-busdevice = [
+    {file = "adafruit-circuitpython-busdevice-4.1.1.tar.gz", hash = "sha256:4a227f1bffee6e8e2563dfe893864a39359f02cf0241b0499abbe79366b32493"},
+]
+adafruit-circuitpython-charlcd = [
+    {file = "adafruit-circuitpython-charlcd-3.2.2.tar.gz", hash = "sha256:58f6ecfbcbbdc4e0b3a7eab5fd4ac14cef1faf518b17098374207653de6efee4"},
+]
+adafruit-circuitpython-mcp230xx = [
+    {file = "adafruit-circuitpython-mcp230xx-2.2.1.tar.gz", hash = "sha256:ff745532a56bc2e523d92f01ea1a9a475eeca9cecd0ab07ef2e55664e1c08b01"},
+]
+adafruit-platformdetect = [
+    {file = "Adafruit-PlatformDetect-2.1.0.tar.gz", hash = "sha256:382e462bb31f615b1a51c20b9ab734221dd693cc52634edafa505a07694be197"},
+]
+adafruit-pureio = [
+    {file = "Adafruit_PureIO-1.0.4.tar.gz", hash = "sha256:b67587ed3c4dc90bd0e9b988587efa66b4466abf71eb0dcbcd4695e7e4350326"},
+]
+certifi = [
+    {file = "certifi-2019.11.28-py2.py3-none-any.whl", hash = "sha256:017c25db2a153ce562900032d5bc68e9f191e44e9a0f762f373977de9df1fbb3"},
+    {file = "certifi-2019.11.28.tar.gz", hash = "sha256:25b64c7da4cd7479594d035c08c2d809eb4aab3a26e5a990ea98cc450c320f1f"},
+]
+chardet = [
+    {file = "chardet-3.0.4-py2.py3-none-any.whl", hash = "sha256:fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"},
+    {file = "chardet-3.0.4.tar.gz", hash = "sha256:84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae"},
+]
+idna = [
+    {file = "idna-2.8-py2.py3-none-any.whl", hash = "sha256:ea8b7f6188e6fa117537c3df7da9fc686d485087abf6ac197f9c46432f7e4a3c"},
+    {file = "idna-2.8.tar.gz", hash = "sha256:c357b3f628cf53ae2c4c05627ecc484553142ca23264e593d327bcde5e9c3407"},
+]
+pyftdi = [
+    {file = "pyftdi-0.42.2.tar.gz", hash = "sha256:72436911f1f5da15869027401ef666e9b0c8f051e4ba8cd32377b0757016ebae"},
+]
+pyserial = [
+    {file = "pyserial-3.4-py2.py3-none-any.whl", hash = "sha256:e0770fadba80c31013896c7e6ef703f72e7834965954a78e71a3049488d4d7d8"},
+    {file = "pyserial-3.4.tar.gz", hash = "sha256:6e2d401fdee0eab996cf734e67773a0143b932772ca8b42451440cfed942c627"},
+]
+python-dateutil = [
+    {file = "python-dateutil-2.8.1.tar.gz", hash = "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c"},
+    {file = "python_dateutil-2.8.1-py2.py3-none-any.whl", hash = "sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a"},
+]
+pytz = [
+    {file = "pytz-2019.3-py2.py3-none-any.whl", hash = "sha256:1c557d7d0e871de1f5ccd5833f60fb2550652da6be2693c1e02300743d21500d"},
+    {file = "pytz-2019.3.tar.gz", hash = "sha256:b02c06db6cf09c12dd25137e563b31700d3b80fcc4ad23abb7a315f2789819be"},
+]
+pyusb = [
+    {file = "pyusb-1.0.2.tar.gz", hash = "sha256:4e9b72cc4a4205ca64fbf1f3fff39a335512166c151ad103e55c8223ac147362"},
+]
+requests = [
+    {file = "requests-2.22.0-py2.py3-none-any.whl", hash = "sha256:9cf5292fcd0f598c671cfc1e0d7d1a7f13bb8085e9a590f48c010551dc6c4b31"},
+    {file = "requests-2.22.0.tar.gz", hash = "sha256:11e007a8a2aa0323f5a921e9e6a2d7e4e67d9877e85773fba9ba6419025cbeb4"},
+]
+six = [
+    {file = "six-1.14.0-py2.py3-none-any.whl", hash = "sha256:8f3cd2e254d8f793e7f3d6d9df77b92252b52637291d0f0da013c76ea2724b6c"},
+    {file = "six-1.14.0.tar.gz", hash = "sha256:236bdbdce46e6e6a3d61a337c0f8b763ca1e8717c03b369e87a7ec7ce1319c0a"},
+]
+spidev = [
+    {file = "spidev-3.4.tar.gz", hash = "sha256:4314e52f573d95233c907f307558893313a8a606e197e77bb711526b0e179e80"},
+]
+sysv-ipc = [
+    {file = "sysv_ipc-1.0.1-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:a67fc5b7a3dd5fc9c50776de0c65a44eb776d29bb88364dedb1fb1149e53a1f1"},
+    {file = "sysv_ipc-1.0.1-cp36-cp36m-macosx_10_6_intel.whl", hash = "sha256:2b2b8491764845d06a9d5731ebe67f12fbe0c35967ac7f2bbe55ff24cb302405"},
+    {file = "sysv_ipc-1.0.1.tar.gz", hash = "sha256:8eff10dd17789ddf21b422ce46ae0f6420088902a88e4296cb805cf2fde8b4dc"},
+]
+urllib3 = [
+    {file = "urllib3-1.25.8-py2.py3-none-any.whl", hash = "sha256:2f3db8b19923a873b3e5256dc9c2dedfa883e33d87c690d9c7913e1f40673cdc"},
+    {file = "urllib3-1.25.8.tar.gz", hash = "sha256:87716c2d2a7121198ebcb7ce7cccf6ce5e9ba539041cfbaeecfb641dc0bf6acc"},
+]

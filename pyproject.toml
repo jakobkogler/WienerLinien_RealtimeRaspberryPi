@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "wiener_linien_lib"
+version = "0.1.0"
+description = ""
+authors = ["Jakob Kogler <jakob.kogler@posteo>", "Jakob Kogler <jakob.kogler@gmail.com"]
+
+[tool.poetry.dependencies]
+python = "^3.7.4"
+adafruit-circuitpython-charlcd = "^3.2.2"
+requests = "^2.22.0"
+python-dateutil = "^2.8.1"
+pytz = "^2019.3"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+
+[tool.poetry.scripts]
+realtime = "main:main"

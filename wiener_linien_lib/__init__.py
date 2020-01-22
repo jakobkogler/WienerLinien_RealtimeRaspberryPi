@@ -53,4 +53,6 @@ class WienerLinien:
     def parse_departure(self, departure_string, now):
         departure = parser.parse(departure_string)
         diff_total = (departure - now).seconds
+        if diff_total > 10 * 60:
+            return f"{diff_total // 60}"
         return f"{diff_total // 60}:{diff_total % 60:02}"

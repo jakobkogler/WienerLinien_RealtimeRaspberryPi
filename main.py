@@ -1,6 +1,8 @@
 from wiener_linien_lib import WienerLinien, DepartureInfos
 import argparse
+from enum import Enum
 from typing import List
+from datetime import datetime, timedelta
 import asyncio
 import board  # type: ignore
 import busio  # type: ignore
@@ -16,6 +18,20 @@ def replace_umlaute(s: str):
     s = s.replace("ö", "oe")
     s = s.replace("ü", "ue")
     return s
+
+
+class UpdateSpeed(Enum):
+    slow = 30
+    fast = 5
+
+    def next(self):
+        if self == self.fast:
+            return self.slow
+        else:
+            return self.fast
+
+
+update_speed = UpdateSpeed.slow
 
 
 class LCD:
@@ -43,8 +59,9 @@ class LCD:
     def station_string(self):
         if self.departures:
             name, countdowns = self.departures[self.current_station % len(self.departures)]
-            countdown_str = ' '.join(str(value) for value in countdowns)
-            return replace_umlaute(f'''{name}\n{countdown_str:>16}''')
+            countdown_str = ' '.join(str(value) for value in countdowns)[:20]
+            fast_mode = "*** " if update_speed == UpdateSpeed.fast else ""
+            return fast_mode + replace_umlaute(f'''{name}\n{countdown_str:>16}''')
         return ""
 
     async def show_departures(self) -> None:
@@ -79,18 +96,25 @@ class LCD:
                 await asyncio.sleep(0.5)
             if self.lcd.select_button:
                 print("Select")
+                global update_speed
+                update_speed = update_speed.next()
+                print(f"Speed = {update_speed.name}")
                 self.request_update = True
                 await asyncio.sleep(0.5)
             await asyncio.sleep(0.1)
 
 
 async def realtime_data_loop(apikey: str, RBL_numbers: List[int], lcd: LCD):
+    global update_speed
     wiener_linien = WienerLinien(apikey)
+    last_update = datetime.now() - timedelta(seconds=1000)
     while True:
-        data = wiener_linien.get_departures(RBL_numbers)
-        print(data)
-        lcd.update_departures(data)
-        await asyncio.sleep(30)
+        if (datetime.now() - last_update).seconds > update_speed.value:
+            data = wiener_linien.get_departures(RBL_numbers)
+            print(data)
+            lcd.update_departures(data)
+            last_update = datetime.now()
+        await asyncio.sleep(0.5)
 
 
 async def _main(apikey: str, RBL_numbers: List[int]):

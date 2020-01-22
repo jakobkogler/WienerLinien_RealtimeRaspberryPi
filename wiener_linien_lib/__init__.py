@@ -10,7 +10,7 @@ import pytz
 tz = pytz.timezone('Europe/Vienna')
 
 
-DepartureInfos = Dict[str, List[int]]
+DepartureInfos = Dict[str, List[str]]
 
 
 class WienerLinien:

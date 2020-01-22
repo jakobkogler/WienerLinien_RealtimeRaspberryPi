@@ -43,15 +43,17 @@ class WienerLinien:
         for rbl in json_resp['data']['monitors']:
             for line in rbl['lines']:
                 name = f'''{line['name']} {line['towards']}'''
-                # departures = [departure['departureTime']['countdown'] for departure in line['departures']['departure']]
-                departures = [self.parse_departure(departure['departureTime']['timeReal'], now)
+                departures = [self.get_departure_string(departure['departureTime'], now)
                               for departure in line['departures']['departure']]
                 data[name] = departures
         return data
 
-    def parse_departure(self, departure_string, now):
-        departure = parser.parse(departure_string)
-        diff_total = (departure - now).seconds
-        if diff_total > 10 * 60:
-            return f"{diff_total // 60}"
-        return f"{diff_total // 60}:{diff_total % 60:02}"
+    def get_departure_string(self, departure: Dict, now: datetime.datetime) -> str:
+        if 'timeReal' in departure:
+            departure_time = parser.parse(departure['timeReal'])
+            diff_total = (departure_time - now).seconds
+            if diff_total > 10 * 60:
+                return f"{diff_total // 60}"
+            return f"{diff_total // 60}:{diff_total % 60:02}"
+        else:
+            return str(departure['countdown'])

@@ -56,7 +56,7 @@ class LCD:
         if message_before != message_after:
             self.request_update = True
 
-    def station_string(self):
+    def station_string(self) -> str:
         if self.departures:
             name, countdowns = self.departures[self.current_station % len(self.departures)]
             countdown_str = ' '.join(str(value) for value in countdowns)[:20]
@@ -104,7 +104,7 @@ class LCD:
             await asyncio.sleep(0.1)
 
 
-async def realtime_data_loop(RBL_numbers: List[int], lcd: LCD):
+async def realtime_data_loop(RBL_numbers: List[int], lcd: LCD) -> None:
     global update_speed
     wiener_linien = WienerLinien()
     last_update = datetime.now() - timedelta(seconds=1000)
@@ -117,7 +117,7 @@ async def realtime_data_loop(RBL_numbers: List[int], lcd: LCD):
         await asyncio.sleep(0.5)
 
 
-async def _main(RBL_numbers: List[int]):
+async def _main(RBL_numbers: List[int]) -> None:
     lcd = LCD()
     await asyncio.gather(
         realtime_data_loop(RBL_numbers, lcd),
@@ -126,7 +126,7 @@ async def _main(RBL_numbers: List[int]):
     )
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(description='Display real time information of Wiener Linien station on a Raspberry Pi')
     parser.add_argument('RBL', type=int, nargs='+', help='RBL numbers for the stations')
     args = parser.parse_args()

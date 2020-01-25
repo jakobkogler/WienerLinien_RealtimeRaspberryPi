@@ -3,11 +3,11 @@ import requests
 from requests.exceptions import HTTPError
 import json
 from dateutil import parser
+from dateutil.tz import gettz
 from datetime import datetime, timedelta
-import pytz
 
 
-tz = pytz.timezone('Europe/Vienna')
+tz_vienna = gettz('Europe/Vienna')
 
 
 DepartureInfos = Dict[str, List[str]]
@@ -57,3 +57,30 @@ class WienerLinien:
             return f"{diff_total // 60}:{diff_total % 60:02}"
         else:
             return str(departure['countdown'])
+
+
+class Departure:
+    def __init__(self, exact: timedelta, countdown: int):
+        """exact: timedelta object that specifies when the train departures
+        countdown: approxiate departure in minutes"""
+        self.exact = exact
+        self.countdown = countdown
+
+    @classmethod
+    def from_json(cls, json_repr: Dict) -> "Departure":
+        time_real = parser.parse(json_repr['departureTime']['timeReal']).astimezone(tz_vienna)
+        exact = time_real - cls.get_local_now()
+        countdown = json_repr['departureTime']['countdown']
+        return cls(exact=exact, countdown=countdown)
+
+    def __repr__(self):
+        if self.exact < timedelta(minutes=10):
+            seconds = self.exact.seconds
+            return f"{seconds//60}:{seconds%60:02d}"
+        return f"{self.countdown}"
+   
+    @staticmethod
+    def get_local_now():
+        return datetime.now(tz_vienna)
+
+

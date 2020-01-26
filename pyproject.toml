@@ -13,6 +13,7 @@ pytz = "^2019.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.3.4"
+pytest-mypy = "^0.4.2"
 
 [tool.poetry.scripts]
 realtime = "main:main"

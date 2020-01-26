@@ -1,7 +1,9 @@
 import datetime
 import json
-import pytest
+
+import pytest  # type: ignore
 from dateutil.tz import gettz
+
 from wiener_linien_lib import Departure
 
 

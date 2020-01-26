@@ -1,7 +1,7 @@
-from wiener_linien_lib import WienerLinien, DepartureInfos
+from wiener_linien_lib import WienerLinien, DepartureInfos, Departure
 import argparse
 from enum import Enum
-from typing import List
+from typing import List, Tuple
 from datetime import datetime, timedelta
 import asyncio
 import board  # type: ignore
@@ -9,7 +9,7 @@ import busio  # type: ignore
 import adafruit_character_lcd.character_lcd_rgb_i2c as character_lcd  # type: ignore
 
 
-def replace_umlaute(s: str):
+def replace_umlaute(s: str) -> str:
     s = s.replace("Ä", "Ae")
     s = s.replace("Ö", "Oe")
     s = s.replace("Ü", "Ue")
@@ -24,11 +24,11 @@ class UpdateSpeed(Enum):
     slow = 30
     fast = 5
 
-    def next(self):
-        if self == self.fast:
-            return self.slow
+    def next(self) -> "UpdateSpeed":
+        if self == UpdateSpeed.fast:
+            return UpdateSpeed.slow
         else:
-            return self.fast
+            return UpdateSpeed.fast
 
 
 update_speed = UpdateSpeed.slow
@@ -45,7 +45,7 @@ class LCD:
         self.lcd.clear()
         self.lcd.color = [100, 0, 0]
 
-        self.departures = []
+        self.departures: List[Tuple[str, List[Departure]]] = []
         self.current_station = 0
         self.request_update = False
         

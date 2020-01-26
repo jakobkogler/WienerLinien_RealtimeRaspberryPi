@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "wiener_linien_lib"
+name = "wiener_linien"
 version = "0.1.0"
 description = ""
 authors = ["Jakob Kogler <jakob.kogler@posteo>", "Jakob Kogler <jakob.kogler@gmail.com"]

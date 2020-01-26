@@ -3,7 +3,7 @@ import json
 
 import pytest  # type: ignore
 import pytz
-from wiener_linien_lib import Departure
+from wiener_linien import Departure
 
 
 def test_departure_init():

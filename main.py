@@ -1,4 +1,4 @@
-from wiener_linien_lib import WienerLinien, DepartureInfos, Departure
+from wiener_linien import WienerLinien, DepartureInfos, Departure
 import argparse
 from enum import Enum
 from typing import List, Tuple

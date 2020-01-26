@@ -3,6 +3,7 @@ import json
 
 import pytest  # type: ignore
 import pytz
+import wiener_linien
 from wiener_linien import Departure
 
 
@@ -43,7 +44,7 @@ def now_frozen(monkeypatch):
         tz_vienna = pytz.timezone("Europe/Vienna")
         return tz_vienna.localize(datetime.datetime(2020, 1, 25, 20, 33, 59))
 
-    monkeypatch.setattr(Departure, "get_local_now", mockreturn)
+    monkeypatch.setattr(wiener_linien, "get_local_now", mockreturn)
 
 
 def test_departure_create(json_departure_15, now_frozen):

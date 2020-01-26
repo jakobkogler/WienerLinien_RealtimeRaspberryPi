@@ -2,8 +2,7 @@ import datetime
 import json
 
 import pytest  # type: ignore
-from dateutil.tz import gettz
-
+import pytz
 from wiener_linien_lib import Departure
 
 
@@ -40,8 +39,8 @@ def json_departure_missing_realtime():
 @pytest.fixture
 def now_frozen(monkeypatch):
     def mockreturn():
-        tz_vienna = gettz('Europe/Vienna')
-        return datetime.datetime(2020, 1, 25, 20, 33, 59, tzinfo=tz_vienna)
+        tz_vienna = pytz.timezone('Europe/Vienna')
+        return tz_vienna.localize(datetime.datetime(2020, 1, 25, 20, 33, 59))
     monkeypatch.setattr(Departure, "get_local_now", mockreturn) 
 
 

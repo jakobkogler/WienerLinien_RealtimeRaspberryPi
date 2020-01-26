@@ -4,10 +4,11 @@ from typing import Dict, List, Optional
 
 import requests
 from dateutil import parser
-from dateutil.tz import gettz
+import pytz
 from requests.exceptions import HTTPError
 
-tz_vienna = gettz('Europe/Vienna')
+
+tz_vienna = pytz.timezone('Europe/Vienna')
 
 
 class Departure:
@@ -22,7 +23,7 @@ class Departure:
         departure_dict = json_repr['departureTime']
         exact = None
         if 'timeReal' in departure_dict:
-            time_real = parser.parse(departure_dict['timeReal']).astimezone(tz_vienna)
+            time_real = tz_vienna.localize(parser.parse(departure_dict['timeReal'], ignoretz=True))
             exact = time_real - cls.get_local_now()
         countdown = departure_dict['countdown']
         return cls(exact=exact, countdown=countdown)

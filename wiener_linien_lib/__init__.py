@@ -1,16 +1,47 @@
-from typing import List, Dict
-import requests
-from requests.exceptions import HTTPError
 import json
+from datetime import datetime, timedelta
+from typing import Dict, List, Optional
+
+import requests
 from dateutil import parser
 from dateutil.tz import gettz
-from datetime import datetime, timedelta
-
+from requests.exceptions import HTTPError
 
 tz_vienna = gettz('Europe/Vienna')
 
 
-DepartureInfos = Dict[str, List[str]]
+class Departure:
+    def __init__(self, exact: Optional[timedelta], countdown: int):
+        """exact: timedelta object that specifies when the train departures
+        countdown: approxiate departure in minutes"""
+        self.exact = exact
+        self.countdown = countdown
+
+    @classmethod
+    def from_json(cls, json_repr: Dict) -> "Departure":
+        departure_dict = json_repr['departureTime']
+        exact = None
+        if 'timeReal' in departure_dict:
+            time_real = parser.parse(departure_dict['timeReal']).astimezone(tz_vienna)
+            exact = time_real - cls.get_local_now()
+        countdown = departure_dict['countdown']
+        return cls(exact=exact, countdown=countdown)
+
+    def __repr__(self):
+        if self.exact is not None:
+            seconds = max(timedelta(0), self.exact).seconds
+            if self.exact < timedelta(minutes=10):
+                return f"{seconds//60}:{seconds%60:02d}"
+            else:
+                return f"{int(round(seconds/60))}"
+        return f"{self.countdown}"
+
+    @staticmethod
+    def get_local_now():
+        return datetime.now(tz_vienna)
+
+
+DepartureInfos = Dict[str, List[Departure]]
 
 
 class WienerLinien:
@@ -34,53 +65,14 @@ class WienerLinien:
         assert json_resp['message']['value'] == 'OK'
 
         server_time = parser.parse(json_resp['message']['serverTime'])
-        now = datetime.now(tz)
+        now = datetime.now(tz_vienna)
         assert(abs(now - server_time).seconds < 5)
-        print(now)
-        print(server_time)
 
         data = {}
         for rbl in json_resp['data']['monitors']:
             for line in rbl['lines']:
                 name = f'''{line['name']} {line['towards']}'''
-                departures = [self.get_departure_string(departure['departureTime'], now)
-                              for departure in line['departures']['departure']]
+                departures = [Departure.from_json(departure_dict)
+                              for departure_dict in line['departures']['departure']]
                 data[name] = departures
         return data
-
-    def get_departure_string(self, departure: Dict, now: datetime) -> str:
-        if 'timeReal' in departure:
-            departure_time = parser.parse(departure['timeReal'])
-            diff_total = max(departure_time - now, timedelta(0)).seconds
-            if diff_total > 10 * 60:
-                return f"{diff_total // 60}"
-            return f"{diff_total // 60}:{diff_total % 60:02}"
-        else:
-            return str(departure['countdown'])
-
-
-class Departure:
-    def __init__(self, exact: timedelta, countdown: int):
-        """exact: timedelta object that specifies when the train departures
-        countdown: approxiate departure in minutes"""
-        self.exact = exact
-        self.countdown = countdown
-
-    @classmethod
-    def from_json(cls, json_repr: Dict) -> "Departure":
-        time_real = parser.parse(json_repr['departureTime']['timeReal']).astimezone(tz_vienna)
-        exact = time_real - cls.get_local_now()
-        countdown = json_repr['departureTime']['countdown']
-        return cls(exact=exact, countdown=countdown)
-
-    def __repr__(self):
-        if self.exact < timedelta(minutes=10):
-            seconds = self.exact.seconds
-            return f"{seconds//60}:{seconds%60:02d}"
-        return f"{self.countdown}"
-   
-    @staticmethod
-    def get_local_now():
-        return datetime.now(tz_vienna)
-
-

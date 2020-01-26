@@ -23,6 +23,18 @@ def json_departure_5():
     departure_json = """{"departureTime":{"timePlanned":"2020-01-25T20:49:00.000+0100","timeReal":"2020-01-25T20:39:00.000+0100","countdown":5}}"""
     return json.loads(departure_json)
 
+
+@pytest.fixture
+def json_departure_negative():
+    departure_json = """{"departureTime":{"timePlanned":"2020-01-25T20:49:00.000+0100","timeReal":"2020-01-25T20:33:00.000+0100","countdown":5}}"""
+    return json.loads(departure_json)
+
+
+@pytest.fixture
+def json_departure_missing_realtime():
+    departure_json = """{"departureTime":{"countdown":5}}"""
+    return json.loads(departure_json)
+
 @pytest.fixture
 def now_frozen(monkeypatch):
     def mockreturn():
@@ -46,3 +58,13 @@ def test_departure_repr15(json_departure_15, now_frozen):
 def test_departure_repr5(json_departure_5, now_frozen):
     departure = Departure.from_json(json_departure_5)
     assert repr(departure) == "5:01"
+
+
+def test_negative_departure(json_departure_negative, now_frozen):
+    departure = Departure.from_json(json_departure_negative)
+    assert repr(departure) == "0:00"
+
+
+def test_missing_realtime(json_departure_missing_realtime, now_frozen):
+    departure = Departure.from_json(json_departure_missing_realtime)
+    assert repr(departure) == "5"

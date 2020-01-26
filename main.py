@@ -48,7 +48,7 @@ class LCD:
         self.departures: List[Tuple[str, List[Departure]]] = []
         self.current_station = 0
         self.request_update = False
-        
+
     def update_departures(self, departures: DepartureInfos) -> None:
         message_before = self.station_string()
         self.departures = sorted(departures.items())
@@ -59,9 +59,9 @@ class LCD:
     def station_string(self) -> str:
         if self.departures:
             name, countdowns = self.departures[self.current_station % len(self.departures)]
-            countdown_str = ' '.join(str(value) for value in countdowns)[:20]
+            countdown_str = " ".join(str(value) for value in countdowns)[:20]
             fast_mode = "*** " if update_speed == UpdateSpeed.fast else ""
-            return fast_mode + replace_umlaute(f'''{name}\n{countdown_str:>16}''')
+            return fast_mode + replace_umlaute(f"""{name}\n{countdown_str:>16}""")
         return ""
 
     async def show_departures(self) -> None:
@@ -120,18 +120,18 @@ async def realtime_data_loop(RBL_numbers: List[int], lcd: LCD) -> None:
 async def _main(RBL_numbers: List[int]) -> None:
     lcd = LCD()
     await asyncio.gather(
-        realtime_data_loop(RBL_numbers, lcd),
-        lcd.show_departures(),
-        lcd.handle_buttons()
+        realtime_data_loop(RBL_numbers, lcd), lcd.show_departures(), lcd.handle_buttons()
     )
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description='Display real time information of Wiener Linien station on a Raspberry Pi')
-    parser.add_argument('RBL', type=int, nargs='+', help='RBL numbers for the stations')
+    parser = argparse.ArgumentParser(
+        description="Display real time information of Wiener Linien station on a Raspberry Pi"
+    )
+    parser.add_argument("RBL", type=int, nargs="+", help="RBL numbers for the stations")
     args = parser.parse_args()
     asyncio.run(_main(args.RBL))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

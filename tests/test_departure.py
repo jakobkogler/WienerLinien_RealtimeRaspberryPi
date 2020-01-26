@@ -36,12 +36,14 @@ def json_departure_missing_realtime():
     departure_json = """{"departureTime":{"countdown":5}}"""
     return json.loads(departure_json)
 
+
 @pytest.fixture
 def now_frozen(monkeypatch):
     def mockreturn():
-        tz_vienna = pytz.timezone('Europe/Vienna')
+        tz_vienna = pytz.timezone("Europe/Vienna")
         return tz_vienna.localize(datetime.datetime(2020, 1, 25, 20, 33, 59))
-    monkeypatch.setattr(Departure, "get_local_now", mockreturn) 
+
+    monkeypatch.setattr(Departure, "get_local_now", mockreturn)
 
 
 def test_departure_create(json_departure_15, now_frozen):

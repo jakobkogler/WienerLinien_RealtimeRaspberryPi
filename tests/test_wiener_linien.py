@@ -1,38 +1,24 @@
 import json
 from datetime import datetime, timedelta
+from unittest.mock import patch
 
-import pytest  # type: ignore
 import pytz
-import requests
 
-import wiener_linien
 from wiener_linien import Departure, WienerLinien
 
 
-class MockedResponse:
-    def json(self):
-        with open("tests/response_stephansplatz.json", "r") as f:
-            return json.load(f)
-
-    def raise_for_status(self):
-        pass
+TZ_VIENNA = pytz.timezone("Europe/Vienna")
+DATETIME_NOW = TZ_VIENNA.localize(datetime(2020, 1, 1, 12, 0, 0))
 
 
-@pytest.fixture
-def now_frozen(monkeypatch):
-    def mockreturn():
-        tz_vienna = pytz.timezone("Europe/Vienna")
-        return tz_vienna.localize(datetime(2020, 1, 1, 12, 0, 0))
+@patch('wiener_linien.datetime')
+@patch('wiener_linien.requests')
+def test_get_departures(mock_requests, mock_datetime):
+    with open("tests/response_stephansplatz.json", "r") as f:
+        stephans_platz_json = json.load(f)
+    mock_requests.get.return_value.json.return_value = stephans_platz_json
+    mock_datetime.now.return_value = DATETIME_NOW
 
-    monkeypatch.setattr(wiener_linien, "get_local_now", mockreturn)
-
-
-@pytest.fixture
-def request_mock(monkeypatch):
-    monkeypatch.setattr(requests, "get", lambda *args, **kwargs: MockedResponse())
-
-
-def test_get_departures(request_mock, now_frozen):
     wl = WienerLinien()
     departure3 = Departure(timedelta(minutes=3, seconds=3), 3)
     departure6 = Departure(timedelta(minutes=6, seconds=6), 6)

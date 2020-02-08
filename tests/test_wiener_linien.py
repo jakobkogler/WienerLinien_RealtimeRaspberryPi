@@ -11,8 +11,8 @@ TZ_VIENNA = pytz.timezone("Europe/Vienna")
 DATETIME_NOW = TZ_VIENNA.localize(datetime(2020, 1, 1, 12, 0, 0))
 
 
-@patch('wiener_linien.datetime')
-@patch('wiener_linien.requests')
+@patch("wiener_linien.datetime")
+@patch("wiener_linien.requests")
 def test_get_departures(mock_requests, mock_datetime):
     with open("tests/response_stephansplatz.json", "r") as f:
         stephans_platz_json = json.load(f)

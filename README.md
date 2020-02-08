@@ -26,3 +26,11 @@ Afterwards you can run the script for some given RBL numbers (find them [here](h
 ```
 poetry run realtime RLB [RBL ...]
 ```
+
+## Testing
+
+Run the unit-tests with:
+
+```
+poetry run pytest --mypy --black
+```

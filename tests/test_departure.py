@@ -22,16 +22,18 @@ DEPARTURE_5_TEXT = """{"departureTime":{"timePlanned":"2020-01-25T20:49:00.000+0
 DEPARTURE_NEGATIVE_TEXT = """{"departureTime":{"timePlanned":"2020-01-25T20:49:00.000+0100","timeReal":"2020-01-25T20:33:00.000+0100","countdown":5}}"""
 DEPARTURE_MISSING_REALTIME_TEXT = """{"departureTime":{"countdown":5}}"""
 
-REPRESENTATION_TEST = [(DEPARTURE_15_TEXT, "15"),
-                       (DEPARTURE_5_TEXT, "5:01"),
-                       (DEPARTURE_NEGATIVE_TEXT, "0:00"),
-                       (DEPARTURE_MISSING_REALTIME_TEXT, "5")]
+REPRESENTATION_TEST = [
+    (DEPARTURE_15_TEXT, "15"),
+    (DEPARTURE_5_TEXT, "5:01"),
+    (DEPARTURE_NEGATIVE_TEXT, "0:00"),
+    (DEPARTURE_MISSING_REALTIME_TEXT, "5"),
+]
 
 
 class TestDeparture:
     @classmethod
     def setup_class(cls):
-        cls.mock_datetime_patcher = patch('wiener_linien.datetime')
+        cls.mock_datetime_patcher = patch("wiener_linien.datetime")
         cls.mock_datetime = cls.mock_datetime_patcher.start()
         cls.mock_datetime.now.return_value = DATETIME_NOW
 

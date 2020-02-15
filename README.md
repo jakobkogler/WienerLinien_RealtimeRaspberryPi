@@ -1,4 +1,4 @@
-# WienerLininen_RealtimeRaspberryPi
+# WienerLinien_RealtimeRaspberryPi
 
 As the name suggest, this project contains a script that displays realtime departure times from the Wiener Linien on a Raspberry Pi with an [Adafruit 16x2 Character LCD + Keypad Kit](https://www.adafruit.com/product/1109).
 
